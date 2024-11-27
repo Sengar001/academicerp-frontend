@@ -5,15 +5,28 @@ import { useParams, Link } from "react-router-dom";
 const EmployeeList = () => {
     const { id } = useParams(); 
     const [employees, setEmployees] = useState([]);
+    const [department, setDepartment] = useState();
 
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const response = await api.get(`/department/${id}`);
-                setEmployees(response.data);
+                const employeeResponse = await api.get(`/department/${id}/employee`);
+                setEmployees(employeeResponse.data);
             } catch (error) {
-                alert("Failed to fetch employees for the department!");
+                // alert("Failed to fetch employees for the department!");
             }
+
+            try {
+                const departmentResponse = await api.get(`/department/1/${id}`)
+                // const employeeResponse = await api.get(`/department/${id}/employee`);
+                console.log(departmentResponse);
+                // setEmployees(employeeResponse.data);
+                setDepartment(departmentResponse?.data?.name);
+            } catch (error) {
+                // alert("Failed to fetch employees for the department!");
+            }
+
+
         };
         fetchEmployees();
     }, [id]);
@@ -21,7 +34,7 @@ const EmployeeList = () => {
     return (
         <div className="container mt-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h3>Employees in Department { id }</h3>
+                <h3>Employees in Department { department }</h3>
                 <Link to="/departments" className="btn btn-secondary">
                     Back to Departments
                 </Link>

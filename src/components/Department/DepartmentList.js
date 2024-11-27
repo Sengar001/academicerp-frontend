@@ -59,7 +59,7 @@ const DepartmentList = () => {
                                     <td>{dept.capacity}</td>
                                     <td>
                                         <Link
-                                            to={`/departments/${dept.department_id}`}
+                                            to={`/departments/${dept.department_id}/employee`}
                                             className="btn btn-primary btn-sm me-2"
                                         >
                                             View
@@ -88,7 +88,9 @@ const DepartmentList = () => {
                         )}
                     </tbody>
                 </table>
-                <Link to="/" className="btn btn-secondary">
+                <Link to="/" className="btn btn-secondary"
+                    onClick = {() => localStorage.removeItem("authToken")}
+                >
                     Logout
                 </Link>
             </div>
